@@ -1,0 +1,83 @@
+name: Escape Room Autograde
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Compute score
+        id: score
+        run: |
+          set -euo pipefail
+          mkdir -p score-output
+          node scripts/score.js --fail-on-incomplete | tee score-output/score.txt
+
+      - name: Upload score artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: score
+          path: |
+            score-output/score.json
+            score-output/score.txt
+            score-output/score.md
+
+      - name: Comment PR with score
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let summary = 'Score file missing.';
+            try {
+              const report = JSON.parse(fs.readFileSync('score-output/score.json','utf8'));
+              const b = report.score.breakdown;
+              summary = [
+                `TOTAL: ${report.score.total}/100`,
+                `Team: ${report.team && report.team.teamName ? report.team.teamName : 'unknown'}`,
+                `Room1: ${b.room1}/25`,
+                `Room2: ${b.room2}/25`,
+                `Room3 Tests: ${b.room3Tests}/5`,
+                `Room3 Scan: ${b.room3Scan}/20`,
+                `Final Tests: ${b.finalTests}/10`,
+                `Final Dockerfile: ${b.dockerfile}/8`,
+                `Final CI: ${b.ci}/7`,
+                `Final API: ${b.api}/10`,
+                `Final Observability: ${b.obs}/5`
+              ].join('\n');
+            } catch (e) {}
+
+            const body = [
+              '### 🧩 Escape Room — Autograde',
+              '```',
+              summary,
+              '```',
+              'Artifact: download `score.json` / `score.txt` from this workflow run.'
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });

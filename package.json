@@ -1,0 +1,17 @@
+{
+  "name": "legacy-escape-room",
+  "private": true,
+  "workspaces": [
+    "rooms/*"
+  ],
+  "scripts": {
+    "room1": "npm -w @escape/room1 test",
+    "room2": "npm -w @escape/room2 test",
+    "room3": "npm -w @escape/room3 test",
+    "final": "npm -w @escape/final test",
+    "score": "node scripts/score.js",
+    "score:strict": "node scripts/score.js --fail-on-incomplete",
+    "leaderboard": "node scripts/leaderboard.js",
+    "test": "npm -ws test"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@escape/room3",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest --runInBand",
+    "scan": "node scripts/securityScan.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

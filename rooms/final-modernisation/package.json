@@ -1,0 +1,12 @@
+{
+  "name": "@escape/final",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest --runInBand",
+    "start": "node src/monolith.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
