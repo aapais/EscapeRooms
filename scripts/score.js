@@ -129,7 +129,8 @@ function main() {
   const args = parseArgs(process.argv);
   const results = {
     room1: run('npm run room1'),
-    room2: run('npm run room2'),
+    // Room 2 is graded via a trusted gate (independent of repo ESLint config)
+    room2: run('node scripts/grade-room2.js && npm -w @escape/room2 exec -- jest --runInBand'),
     room3Tests: run('npm -w @escape/room3 test'),
     room3Scan: run('npm -w @escape/room3 run scan'),
     finalTests: run('npm -w @escape/final test')

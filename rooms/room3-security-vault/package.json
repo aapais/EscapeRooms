@@ -4,7 +4,8 @@
   "type": "commonjs",
   "scripts": {
     "test": "jest --runInBand",
-    "scan": "node scripts/securityScan.js"
+    "scan": "node scripts/securityScan.js",
+    "start": "node src/server.js"
   },
   "devDependencies": {
     "jest": "^29.7.0"

@@ -9,9 +9,17 @@
     "room2": "npm -w @escape/room2 test",
     "room3": "npm -w @escape/room3 test",
     "final": "npm -w @escape/final test",
+    "start:room2": "npm -w @escape/room2 start",
+    "start:room3": "npm -w @escape/room3 start",
+    "start:final": "npm -w @escape/final start",
     "score": "node scripts/score.js",
     "score:strict": "node scripts/score.js --fail-on-incomplete",
     "leaderboard": "node scripts/leaderboard.js",
+    "ingest": "node scripts/ingest-scores.js",
+    "pack": "node scripts/pack.js",
     "test": "npm -ws test"
+  },
+  "devDependencies": {
+    "express": "^5.2.1"
   }
 }

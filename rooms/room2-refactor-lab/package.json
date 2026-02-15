@@ -5,10 +5,14 @@
   "scripts": {
     "test": "npm run lint && jest --runInBand",
     "lint": "eslint .",
-    "complexity": "eslint . --max-warnings=0"
+    "complexity": "eslint . --max-warnings=0",
+    "start": "node src/server.js"
   },
   "devDependencies": {
     "eslint": "^9.19.0",
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }

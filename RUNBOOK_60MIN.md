@@ -31,6 +31,8 @@
 ### 25–40 min — Room 2
 - Objetivo: refactor incremental e baixar complexidade
 - Gate: `npm run room2`
+> Nota de avaliação: o score usa uma verificação “trusted” da regra `complexity<=10`.
+> Mexer em `rooms/room2-refactor-lab/eslint.config.js` não ajuda (e é considerado tampering).
 
 ### 40–50 min — Room 3
 - Objetivo: remover secrets hardcoded, evitar concat de SQL, melhorar auth/validação
